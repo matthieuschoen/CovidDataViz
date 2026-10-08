@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Country {
+  iso3       String      @id
+  name       String
+  population Int?
+  lat        Float?
+  lon        Float?
+  regions    Region[]
+  stats      DailyStat[]
+}
+
+model Region {
+  id          Int     @id @default(autoincrement())
+  name        String
+  countryIso3 String
+  country     Country @relation(fields: [countryIso3], references: [iso3])
+
+  @@unique([countryIso3, name])
+}
+
+model DailyStat {
+  id           Int      @id @default(autoincrement())
+  countryIso3  String
+  date         DateTime @db.Date
+  confirmed    Int
+  deaths       Int
+  recovered    Int
+  newConfirmed Int
+  newDeaths    Int
+  country      Country  @relation(fields: [countryIso3], references: [iso3])
+
+  @@unique([countryIso3, date])
+  @@index([countryIso3, date])
+}
