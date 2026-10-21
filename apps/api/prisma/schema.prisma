@@ -38,5 +38,5 @@ model DailyStat {
   country      Country  @relation(fields: [countryIso3], references: [iso3])
 
   @@unique([countryIso3, date])
-  @@index([countryIso3, date])
+  @@index([date])
 }

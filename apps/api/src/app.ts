@@ -2,6 +2,7 @@ import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import { config } from './config.js';
 import { prisma } from './db.js';
+import { registerRoutes } from './routes.js';
 
 export async function buildApp() {
   const app = Fastify({ logger: true });
@@ -11,6 +12,8 @@ export async function buildApp() {
     await prisma.$queryRaw`SELECT 1`;
     return { status: 'ok' };
   });
+
+  await registerRoutes(app);
 
   return app;
 }
