@@ -1,0 +1,2 @@
+# Mêmes contrôles rapides que la CI avant d'envoyer la branche
+pnpm lint && pnpm format:check && pnpm typecheck

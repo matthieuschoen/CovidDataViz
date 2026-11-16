@@ -19,6 +19,16 @@ export const countrySchema = z.object({
 });
 export type Country = z.infer<typeof countrySchema>;
 
+export const countryLatestSchema = countrySchema.extend({
+  date: z.string().date(),
+  confirmed: z.number().int(),
+  deaths: z.number().int(),
+  recovered: z.number().int(),
+  newConfirmed: z.number().int(),
+  newDeaths: z.number().int(),
+});
+export type CountryLatest = z.infer<typeof countryLatestSchema>;
+
 export const summarySchema = z.object({
   confirmed: z.number().int(),
   deaths: z.number().int(),
